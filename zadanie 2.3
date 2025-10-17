@@ -1,0 +1,44 @@
+#include <iostream>
+#include <cmath>
+struct punkt
+{
+    double x, y;
+};
+
+using namespace std;
+
+int main()
+{
+    int n,i,j;
+    int a1,a2;
+    double mini,odleglosc;
+    punkt p[100];
+    cout<<"Ile punktow chcesz podac? "<<endl;
+    cin>>n;
+
+    cout<<"Podaj wspolrzedne punktow (x,y)"<<endl;
+    for(i=0;i<n;i++)//zapisywanie wspolrzednych punktow w tablicy
+    {
+        cin>>p[i].x>>p[i].y;
+    }
+    mini = 1e9;//mini ustawiamy na bardzo duza liczbe
+
+    for(i=0;i<n;i++)// petla w petli do sprawdzenia ktora odleglosc jest najmniejsza
+    {
+        for(j=i+1;j<n;j++)
+        {
+            odleglosc=sqrt((p[j].x-p[i].x)*(p[j].x-p[i].x)+(p[j].y-p[i].y)*(p[j].y-p[i].y));
+         if (mini>odleglosc)
+             {
+                 mini=odleglosc;
+                 a1=i;
+                 a2=j;
+             }
+        }
+    }
+    cout<<"najmniejsza odleglosc to "<<mini<<endl;
+    cout<<"Punkty:("<<p[a1].x<<", "<<p[a1].y<<") i ("<<p[a2].x<<", "<<p[a2].y<<")"<<endl;
+
+
+    return 0;
+}
