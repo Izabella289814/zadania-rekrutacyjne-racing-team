@@ -1,0 +1,68 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+struct punkt
+{
+    double x, y;
+};
+
+int main()
+{
+    int n,i;
+    punkt p[100];
+    cout<<"Ile punktow chcesz podac? "<<endl;
+    cin>>n;
+
+    cout<<"Podaj wspolrzedne punktow (x,y)"<<endl;
+    for(i=0;i<n;i++)//zapisywanie wspolrzednych punktow w tablicy
+    {
+        cin>>p[i].x>>p[i].y;
+    }
+
+    double mini=1e9; // bardzo duza liczba
+
+    // sprawdzamy wszystkie pary punktow
+    for (int i=0;i<n;i++)
+    {
+        for (int j=i+1;j<n;j++)
+          {
+            // wyznaczam wspolczynniki prostej przechodzacej przez punkty (x[i],y[i]) i (x[j],y[j])
+            double A=p[j].y-p[i].y;
+            double B=p[i].x-p[j].x;
+            double C=-(A*p[i].x+B*p[i].y);
+
+            double dmin=1e9;
+            double dmax=-1e9;
+
+            // obliczam odleglosci wszystkich punktow od tej prostej
+            for (int k=0;k<n;k++)
+            {
+                double d=(A*p[k].x+B*p[k].y+C)/sqrt(A*A+B*B);
+                if (d<dmin)
+                {
+                    dmin=d;
+                }
+                if (d>dmax)
+                {
+                    dmax=d;
+                }
+            }
+
+            double odleglosc=fabs(dmax-dmin);
+            if (odleglosc<mini)
+            {
+                mini=odleglosc;
+            }
+
+        }
+    }
+
+    cout<<"Najmniejsza odleglosc miedzy dwiema prostymi obejmujacymi punkty: ";
+    cout<<mini<<endl;
+
+    echo "# zadania-rekrutacyjne-" >> README.md
+
+
+    return 0;
+}
