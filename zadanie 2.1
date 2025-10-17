@@ -1,0 +1,65 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+struct Punkt
+{
+    double x, y;
+};
+
+double iloczyn(Punkt A, Punkt B, Punkt C)
+{
+    // zwraca dodatnie, jeśli skręt w lewo
+    return (B.x-A.x)*(C.y-A.y)-(B.y-A.y)*(C.x-A.x);
+}
+
+int main() {
+    int n,i;
+    Punkt p[100];
+    cout<<"Ile punktow chcesz podac? "<<endl;
+    cin>>n;
+
+    cout<<"Podaj wspolrzedne punktow (x,y)"<<endl;
+    for(i=0;i<n;i++)//zapisywanie wspolrzednych punktow w tablicy
+    {
+        cin>>p[i].x>>p[i].y;
+    }
+
+    // Szukamy punktu najbardziej na lewo (najmniejsze x)
+    int lewy=0;
+    for(int i=1;i<n;i++)
+    {
+        if(p[i].x<p[lewy].x)
+            lewy=i;
+    }
+
+    //  Algorytm Jarvisa
+    int otoczka[100];
+    int liczba=0;
+    int a=lewy;
+    do
+    {
+        otoczka[liczba++]=a;
+        int b=(a+1)%n;
+        for(int i=0;i<n;i++)
+        {
+            if (iloczyn(p[a],p[i],p[b])>0)
+            {
+              b=i;
+            }
+        }
+        a=b;
+    }
+    while(a!=lewy);
+
+    // Wypisanie wyników
+    cout << "Punkty tworzace otoczke :";
+    for (int i=0;i<liczba;i++)
+    {
+        cout<<p[otoczka[i]].x<<" "<<p[otoczka[i]].y<<endl;
+    }
+
+    cout<<"Liczba punktow otoczki: "<<liczba<<endl;
+
+    return 0;
+}
